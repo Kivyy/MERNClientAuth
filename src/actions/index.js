@@ -1,11 +1,10 @@
+import axios from 'axios';
 
+const API_URL = 'http://localhost:3000';
 
-export function signinUser({email, passowrd}) {
-  //Submit email/pass to server
+export function signinUser({email, password}) {
+  return function(dispatch){
+    axios.post(`${API_URL}/signin`, {email, password});
+  }
 
-  // if req is good
-  // - update state to indicate user is authenticated
-  // - save JWT token
-  // - redirect to the feature route
-  
 }

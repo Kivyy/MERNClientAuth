@@ -1,32 +1,67 @@
-import React, {Component} from 'react';
-import {reduxForm} from 'redux-form';
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { reduxForm, Field, Form } from 'redux-form';
+import * as actions from '../../actions';
 
-class Signin extends Component {
-
-  handleFormSubmit({email,password}){
-    console.log(email, password);
-  }
-  
-  render(){
-    const { handleSubmit , fields: { email, password}} = this.props;
-
-    return(
-      <form onSubmit={handleSubmit(this.handleFormSubmit.bind(this))}>
-        <fieldset className="form-group">
-          <label>Email:</label>
-          <input {...email} className="form-control"/>
-        </fieldset>
-        <fieldset className="form-group">
-          <label>Password:</label>
-          <input {...password} className="form-control"/>
-        </fieldset>
-          <button action="submit" className="btn btn-primary"> Sign in </button>
-      </form>
-    )
-  }
+const renderInput = field => {
+    const { input, type } = field;
+    return (
+        <div>
+            <input {...input} type={type} className="form-control" />
+        </div>
+    );
 }
 
-export default reduxForm({
-  form: 'signin',
-  fields: ['email' , 'password']
+class Signin extends Component {
+    handleFormSubmit({ email, password }) {
+        console.log(email, password);
+
+        this.props.signinUser({ email, password });
+    }
+
+    renderAlert() {
+        const { errorMessage } = this.props;
+        if (errorMessage) {
+            return (
+                <div className="alert alert-danger">
+                    <strong>Oops!</strong>{errorMessage}
+                </div>
+            );
+        }
+    }
+
+    render(){
+        const { handleSubmit } = this.props;
+
+        return (
+            <Form onSubmit={handleSubmit(this.handleFormSubmit.bind(this))}>
+
+                <div className="form-group">
+                    <label>Email:</label>
+                    <Field name="email"
+                        type="email" component={renderInput} />
+                </div>
+                <div className="form-group">
+                    <label>Password:</label>
+                    <Field name="password"
+                        type="password" component={renderInput} />
+                </div>
+                {this.renderAlert()}
+                <button action="submit" className="btn btn-primary">Sign in</button>
+            </Form>
+        );
+    }
+}
+
+// function mapStateToProps(state) {
+//     return {
+//         // form: state.form,
+//         errorMessage: state.auth.error
+//      };
+// }
+
+Signin = reduxForm({
+ form: 'signin'
 })(Signin);
+
+export default connect(null, actions)(Signin);
