@@ -53,15 +53,15 @@ class Signin extends Component {
     }
 }
 
-// function mapStateToProps(state) {
-//     return {
-//         // form: state.form,
-//         errorMessage: state.auth.error
-//      };
-// }
+function mapStateToProps(state) {
+    return {
+        // form: state.form,
+        errorMessage: state.auth.error
+     };
+}
 
 Signin = reduxForm({
  form: 'signin'
 })(Signin);
 
-export default connect(null, actions)(Signin);
+export default connect(mapStateToProps, actions)(Signin);
