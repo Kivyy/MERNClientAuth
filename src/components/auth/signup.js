@@ -4,6 +4,7 @@ import {connect} from 'react-redux';
 import * as actions from '../../actions';
 
 const renderInput=field=>{
+  console.log(...field.input)
   const {meta: {touched,error}}=field;
   return(
     <div>
@@ -18,16 +19,6 @@ class Signup extends Component {
   handleFormSubmit(formProps) {
     // Call action creator to sign up the user!
     this.props.signupUser(formProps);
-  }
-
-  renderAlert() {
-    if (this.props.errorMessage) {
-      return (
-        <div className="alert alert-danger">
-          <strong>Oops!</strong> {this.props.errorMessage}
-        </div>
-      );
-    }
   }
 
   render() {
@@ -59,7 +50,6 @@ class Signup extends Component {
               type="password"
             />
           </fieldset>
-          {this.renderAlert()}
           <button action="submit" className="btn btn-primary">Sign Up</button>
         </form>
     );
@@ -67,6 +57,7 @@ class Signup extends Component {
 }
 
 function validate(formProps) {
+  console.log(formProps);
   const errors = {};
 
   if (!formProps.email) {
@@ -88,13 +79,11 @@ function validate(formProps) {
   return errors;
 }
 
-function mapStateToProps(state) {
-  return { errorMessage: state.auth.error };
-}
+
 
 export default reduxForm({
   validate,
   form: 'signup'
 })(
-  connect(mapStateToProps,actions)(Signup)
+  connect(null,actions)(Signup)
 );
