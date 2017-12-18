@@ -6,7 +6,7 @@ import {
   AUTH_ERROR
 } from './types';
 
-const ROOT_URL = 'http://localhost:3090';
+const ROOT_URL = 'http://localhost:3000';
 
 export function signinUser({ email, password }) {
   return function(dispatch) {
