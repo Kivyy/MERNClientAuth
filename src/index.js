@@ -17,6 +17,7 @@ import { AUTH_USER } from './actions/types';
 const createStoreWithMiddleware = applyMiddleware(reduxThunk)(createStore);
 const store = createStoreWithMiddleware(reducers);
 
+// check if user has token store in browser if so then the user should be authenticated before the app starts
 const token = localStorage.getItem('token');
 
 if(token){
