@@ -31,6 +31,7 @@ export function signinUser({ email, password }) {
 }
 
 export function signupUser({ email, password }) {
+  //same process as signinUser 
   return function(dispatch) {
     axios.post(`${ROOT_URL}/signup`, { email, password })
       .then(response => {
